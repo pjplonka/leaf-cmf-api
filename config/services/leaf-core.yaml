@@ -1,0 +1,40 @@
+services:
+
+  LeafCoreEventStream:
+    class: Leaf\Core\Application\Common\Event\EventStream
+
+  LeafCoreEventDispatcher:
+    class: Leaf\Core\Application\Common\Event\EventStream
+
+  LeafCoreEventBus:
+    class: Leaf\Core\Application\Common\Event\EventBus
+    arguments:
+      - '@LeafCoreEventStream'
+      - '@EventDispatcher'
+
+  LeafCoreDefaultCommandBus:
+    class: Leaf\Core\Application\Common\Command\DefaultCommandBus
+    arguments:
+      - '@LeafCoreEventBus'
+      - '@LeafCoreCreateElementHandler'
+
+  LeafCoreValidator:
+    class: ValidatorInterface
+    factory: ['Symfony\Component\Validator\Validation', 'createValidator']
+
+  LeafCoreFieldsDtoValidator:
+    class: Leaf\Core\Application\Common\FieldsDtoValidator
+    arguments: ['@LeafCoreValidator']
+
+  LeafCoreFieldFactory:
+    class: Leaf\Core\Core\Element\Field\FieldFactory
+
+
+  LeafCoreCreateElementHandler:
+    class: Leaf\Core\Application\CreateElement\CreateElementHandler
+    arguments:
+      - '@ConfigurationProvider'
+      - '@LeafCoreFieldsDtoValidator'
+      - '@LeafCoreFieldFactory'
+      - '@Elements'
+      - '@LeafCoreEventStream'

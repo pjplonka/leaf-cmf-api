@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
+imports:
+    - { resource: services/ }
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -22,3 +25,16 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    EventDispatcher:
+        class: App\CoreIntegration\EventDispatcher
+
+    ConfigurationProvider:
+        class: App\CoreIntegration\ConfigurationProvider
+
+    Elements:
+        class: App\CoreIntegration\Elements
+
+    App\Controller\ElementController:
+        class: App\Controller\ElementController
+        arguments: ['@LeafCoreDefaultCommandBus']
