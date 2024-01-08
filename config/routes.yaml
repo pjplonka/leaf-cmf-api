@@ -1,5 +1,5 @@
-controllers:
+element_controllers:
     resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+        path: ../src/Element/UserInterface/Controller/
+        namespace: App\Element\UserInterface\Controller
     type: attribute

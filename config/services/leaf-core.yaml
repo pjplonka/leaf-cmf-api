@@ -19,7 +19,7 @@ services:
       - '@LeafCoreCreateElementHandler'
 
   LeafCoreValidator:
-    class: ValidatorInterface
+    class: Symfony\Component\Validator\Validator\ValidatorInterface
     factory: ['Symfony\Component\Validator\Validation', 'createValidator']
 
   LeafCoreFieldsDtoValidator:
@@ -38,3 +38,5 @@ services:
       - '@LeafCoreFieldFactory'
       - '@Elements'
       - '@LeafCoreEventStream'
+
+  Leaf\Core\Application\Common\Command\CommandBus: '@LeafCoreDefaultCommandBus'
