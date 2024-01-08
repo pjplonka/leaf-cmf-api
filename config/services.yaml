@@ -26,7 +26,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     EventDispatcher:
-        class: App\CoreIntegration\EventDispatcher
+        class: App\Element\Infrastructure\Event\EventDispatcher
 
     ConfigurationProvider:
         class: App\CoreIntegration\ConfigurationProvider
