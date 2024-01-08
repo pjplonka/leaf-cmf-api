@@ -32,7 +32,7 @@ services:
         class: App\CoreIntegration\ConfigurationProvider
 
     Elements:
-        class: App\CoreIntegration\Elements
+        class: App\Element\Infrastructure\Repository\Elements
 
     App\Element\UserInterface\Controller\ElementController:
         class: App\Element\UserInterface\Controller\ElementController
