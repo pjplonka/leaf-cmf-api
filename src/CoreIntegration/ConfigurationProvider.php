@@ -1,27 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\CoreIntegration;
 
+use Leaf\Core\Application\Common\ConfigurationProvider as CoreConfigurationProvider;
 use Leaf\Core\Application\Common\Exception\ConfigurationNotFoundException;
 use Leaf\Core\Core\Configuration\Configuration;
-use Leaf\Core\Core\Configuration\Field;
-use Leaf\Core\Core\Element\Field\DateTimeField;
-use Leaf\Core\Core\Element\Field\StringField;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Throwable;
 
-class ConfigurationProvider implements \Leaf\Core\Application\Common\ConfigurationProvider
+readonly class ConfigurationProvider implements CoreConfigurationProvider
 {
+    public function __construct(private KernelInterface $kernel)
+    {
+    }
+
     public function find(string $identifier): Configuration
     {
-        if ($identifier !== 'products') {
-            throw new ConfigurationNotFoundException();
+        try {
+            $config = require $this->kernel->getProjectDir() . '/config/elements/' . $identifier . '.php';
+        } catch (Throwable $_) {
+            throw ConfigurationNotFoundException::create($identifier);
         }
 
         return new Configuration(
-            'products',
-            ...[
-                new Field('name', StringField::getType(), ...StringField::getConstraints()),
-                new Field('delivered_at', DateTimeField::getType(), ...DateTimeField::getConstraints()),
-            ]
+            $identifier,
+            ...$config['fields']
         );
     }
 }

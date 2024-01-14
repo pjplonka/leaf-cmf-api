@@ -30,6 +30,7 @@ services:
 
     ConfigurationProvider:
         class: App\CoreIntegration\ConfigurationProvider
+        arguments: ['@kernel']
 
     Elements:
         class: App\Element\Infrastructure\Repository\Elements
