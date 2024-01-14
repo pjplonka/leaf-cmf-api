@@ -37,3 +37,9 @@ services:
     App\Element\UserInterface\Controller\ElementController:
         class: App\Element\UserInterface\Controller\ElementController
         arguments: ['@LeafCoreDefaultCommandBus']
+
+    ValidationFailedExceptionSubscriber:
+        class: App\Element\Infrastructure\Event\ValidationFailedExceptionSubscriber
+        arguments: []
+        tags:
+            - { name: kernel.event_subscriber }
