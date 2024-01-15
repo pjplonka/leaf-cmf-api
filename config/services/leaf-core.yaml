@@ -40,3 +40,6 @@ services:
       - '@LeafCoreEventStream'
 
   Leaf\Core\Application\Common\Command\CommandBus: '@LeafCoreDefaultCommandBus'
+
+  Leaf\Core\Application\Common\Serializer\ElementSerializer:
+    class: Leaf\Core\Application\Common\Serializer\SimpleSerializer

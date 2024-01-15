@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f696c39f21eaa4abdb58635046310c47",
+    "content-hash": "3342bd1e9eabea9d9f0783cec5f37139",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1546,16 +1546,16 @@
         },
         {
             "name": "pjplonka/leaf-cmf-core",
-            "version": "v0.0.3",
+            "version": "v0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pjplonka/leaf-cmf-core.git",
-                "reference": "e5aa9dd46b7a695035ba5f6f385fd09bbbf52551"
+                "reference": "114d85f212f0fecd1f0f32b69e559d13e01b4fe0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pjplonka/leaf-cmf-core/zipball/e5aa9dd46b7a695035ba5f6f385fd09bbbf52551",
-                "reference": "e5aa9dd46b7a695035ba5f6f385fd09bbbf52551",
+                "url": "https://api.github.com/repos/pjplonka/leaf-cmf-core/zipball/114d85f212f0fecd1f0f32b69e559d13e01b4fe0",
+                "reference": "114d85f212f0fecd1f0f32b69e559d13e01b4fe0",
                 "shasum": ""
             },
             "require": {
@@ -1564,6 +1564,7 @@
                 "symfony/validator": "*"
             },
             "require-dev": {
+                "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "*"
             },
             "type": "library",
@@ -1585,9 +1586,9 @@
             "description": "Core package for LeafCMF",
             "support": {
                 "issues": "https://github.com/pjplonka/leaf-cmf-core/issues",
-                "source": "https://github.com/pjplonka/leaf-cmf-core/tree/v0.0.3"
+                "source": "https://github.com/pjplonka/leaf-cmf-core/tree/v0.0.4"
             },
-            "time": "2024-01-08T21:05:56+00:00"
+            "time": "2024-01-15T11:24:25+00:00"
         },
         {
             "name": "psr/cache",
