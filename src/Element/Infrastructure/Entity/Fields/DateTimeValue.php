@@ -7,7 +7,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'element_datetime_values')]
+#[ORM\Table(name: 'element_date_time_value')]
 class DateTimeValue
 {
     #[ORM\Id]
@@ -15,9 +15,9 @@ class DateTimeValue
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(name: 'element_id')]
-    #[ORM\ManyToOne(targetEntity: Element::class, inversedBy: 'stringValues')]
-    private string $elementId;
+    #[ORM\ManyToOne(targetEntity: Element::class, inversedBy: 'dateTimeValues')]
+    #[ORM\JoinColumn(name: 'element_id', referencedColumnName: 'uuid')]
+    private Element $element;
 
     #[ORM\Column(length: 255)]
     private string $name;
@@ -25,10 +25,30 @@ class DateTimeValue
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $value;
 
-    public function __construct(string $elementId, string $name, DateTimeImmutable $value)
+    public function __construct(Element $element, string $name, DateTimeImmutable $value)
     {
         $this->name = $name;
         $this->value = $value;
-        $this->elementId = $elementId;
+        $this->element = $element;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getElement(): Element
+    {
+        return $this->element;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getValue(): DateTimeImmutable
+    {
+        return $this->value;
     }
 }

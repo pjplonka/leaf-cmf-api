@@ -6,7 +6,7 @@ use App\Element\Infrastructure\Entity\Element;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\Table(name: 'element_string_values')]
+#[ORM\Table(name: 'element_string_value')]
 class StringValue
 {
     #[ORM\Id]
@@ -14,9 +14,9 @@ class StringValue
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(name: 'element_id')]
     #[ORM\ManyToOne(targetEntity: Element::class, inversedBy: 'stringValues')]
-    private string $elementId;
+    #[ORM\JoinColumn(name: 'element_id', referencedColumnName: 'uuid')]
+    private Element $element;
 
     #[ORM\Column(length: 255)]
     private string $name;
@@ -24,10 +24,30 @@ class StringValue
     #[ORM\Column(length: 255)]
     private string $value;
 
-    public function __construct(string $elementId, string $name, string $value)
+    public function __construct(Element $element, string $name, string $value)
     {
-        $this->elementId = $elementId;
+        $this->element = $element;
         $this->name = $name;
         $this->value = $value;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getElement(): Element
+    {
+        return $this->element;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getValue(): string
+    {
+        return $this->value;
     }
 }
