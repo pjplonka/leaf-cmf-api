@@ -19,7 +19,22 @@ readonly class Elements implements \Leaf\Core\Core\Element\Elements
 
     public function find(Uuid $uuid): ?Element
     {
-        dd($uuid);
+        /** @var ElementEntity $elementEntity */
+        $elementEntity = $this->entityManager->getRepository(ElementEntity::class)->find($uuid);
+
+        if (!$elementEntity) {
+            return null;
+        }
+
+        $fields = [];
+        foreach ($elementEntity->getStringValues() as $stringValue) {
+            $fields[] = new StringField($stringValue->getName(), $stringValue->getValue());
+        }
+        foreach ($elementEntity->getDateTimeValues() as $dateTimeValue) {
+            $fields[] = new DateTimeField($dateTimeValue->getName(), $dateTimeValue->getValue());
+        }
+
+        return new Element($elementEntity->getUuid(), $elementEntity->getGroup(), ...$fields);
     }
 
     public function save(Element $element): void
@@ -29,10 +44,10 @@ readonly class Elements implements \Leaf\Core\Core\Element\Elements
         foreach ($element->getFields() as $field) {
             match (true) {
                 $field instanceof StringField => $elementEntity->addStringValue(
-                    new StringValue($element->uuid, $field->getName(), $field->getValue())
+                    new StringValue($elementEntity, $field->getName(), $field->getValue())
                 ),
                 $field instanceof DateTimeField => $elementEntity->addDateTimeValue(
-                    new DateTimeValue($element->uuid, $field->getName(), $field->getValue())
+                    new DateTimeValue($elementEntity, $field->getName(), $field->getValue())
                 )
             };
         }
