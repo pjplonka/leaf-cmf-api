@@ -5,37 +5,34 @@ declare(strict_types=1);
 namespace App\Element\UserInterface\Controller;
 
 use App\Element\Infrastructure\Repository\Elements;
-use App\Element\UserInterface\DTO\CreateElementDTO;
-use App\Element\UserInterface\DTO\CreateElementFieldDTO;
 use Leaf\Core\Application\Common\Command\CommandBus;
 use Leaf\Core\Application\Common\FieldDTO;
 use Leaf\Core\Application\Common\Serializer\ElementSerializer;
 use Leaf\Core\Application\CreateElement\CreateElementCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
-use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Uid\Uuid;
 
 #[AsController]
 class ElementController
 {
-    #[Route('/elements', name: 'elements_create', methods: ['post'])]
+    #[Route('/builder/{type}', name: 'elements_create', methods: ['post'])]
     public function create(
-        #[MapRequestPayload] CreateElementDTO $createElementDTO,
+        string $type,
+        Request $request,
         CommandBus $commandBus,
         Elements $elements,
         ElementSerializer $serializer
     ): Response {
-        $command = new CreateElementCommand(
-            $createElementDTO->getType(),
-            $uuid = Uuid::v4(),
-            ...array_map(
-                fn(CreateElementFieldDTO $field) => new FieldDTO($field->getName(), $field->getValue()),
-                $createElementDTO->getFields()
-            )
-        );
+        $fields = [];
+        foreach ($request->toArray() as $key => $value) {
+            $fields[] = new FieldDTO($key, $value);
+        }
+
+        $command = new CreateElementCommand($type, $uuid = Uuid::v4(), ...$fields);
 
         $commandBus->handle($command);
 

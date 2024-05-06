@@ -11,3 +11,7 @@ manage elements. Thanks to this, you can create any structure
 with any name with just a few clicks in the configuration:
 
 ![CMS vs CMF.jpeg](doc%2FCMS%20vs%20CMF.jpeg)
+
+# TODO
+- move docker files to docker dir
+- catch configuration not found in controller or add it to validation (which is not used now)
