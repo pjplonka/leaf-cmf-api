@@ -4,5 +4,9 @@ dev:
 exec:
 	docker compose exec -it php sh
 
-test:
+test\:init:
+	bin/console doctrine:database:create --env=test || true
+	bin/console doctrine:schema:create  --env=test || true
+
+test\:run:
 	php bin/phpunit

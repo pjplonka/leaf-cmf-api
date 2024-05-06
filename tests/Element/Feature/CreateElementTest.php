@@ -16,14 +16,12 @@ class CreateElementTest extends WebTestCase
         // Create part
         $client->jsonRequest(
             'POST',
-            '/elements',
+            '/builder/products',
             [
-                'type' => 'products',
-                'fields' => [
-                    ['name' => 'name', 'value' => 'Box'],
-                    ['name' => 'delivered_at', 'value' => '2022-01-01'],
-                ]
-            ]);
+                'name' => 'Box',
+                'delivered_at' => '2022-01-01',
+            ]
+        );
 
         $response = $client->getResponse();
         $uuid = json_decode($response->getContent(), true)['uuid'];
