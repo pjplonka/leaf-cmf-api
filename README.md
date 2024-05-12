@@ -16,3 +16,4 @@ with any name with just a few clicks in the configuration:
 - move docker files to docker dir
 - catch configuration not found in controller or add it to validation (which is not used now)
 - update readme with tests, running dev env
+- make xdebug running on local env (and phpunit coverage)
