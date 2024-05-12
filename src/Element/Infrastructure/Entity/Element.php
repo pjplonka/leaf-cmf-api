@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Element\Infrastructure\Entity;
 
 use App\Element\Infrastructure\Entity\Fields\DateTimeValue;
@@ -14,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 class Element
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy: 'NONE')]
+    #[ORM\GeneratedValue('NONE')]
     #[ORM\Column(name: 'uuid', type: 'uuid', unique: true)]
     private string $uuid;
 
@@ -55,10 +57,6 @@ class Element
 
     public function getUuid(): Uuid
     {
-        if ($this->uuid instanceof Uuid) {
-            return $this->uuid;
-        }
-
         return Uuid::fromString($this->uuid);
     }
 
@@ -81,6 +79,6 @@ class Element
 
     public function __toString(): string
     {
-        return $this->getUuid();
+        return $this->getUuid()->toRfc4122();
     }
 }

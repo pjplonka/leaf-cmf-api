@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 class StringValue
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue('SEQUENCE')]
     #[ORM\Column]
     private int $id;
 
