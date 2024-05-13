@@ -18,3 +18,7 @@ with any name with just a few clicks in the configuration:
 - update readme with tests, running dev env
 - make xdebug running on local env (and phpunit coverage)
 - add postman public repo for api examples
+- add swagger documentation
+- remove all fields when element is removed (delete cascade)
+- element need created_at and updated_at
+- add phpstan

@@ -39,7 +39,10 @@ readonly class Elements implements \Leaf\Core\Core\Element\Elements
 
     public function save(Element $element): void
     {
-        $elementEntity = new ElementEntity($element->uuid, $element->group);
+        $elementEntity = $this->entityManager->getRepository(ElementEntity::class)->findOneBy(['uuid' => $element->uuid]);
+        if (!$elementEntity) {
+            $elementEntity = new ElementEntity($element->uuid, $element->group);
+        }
 
         foreach ($element->getFields() as $field) {
             match (true) {

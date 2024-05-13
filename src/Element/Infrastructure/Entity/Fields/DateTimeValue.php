@@ -51,4 +51,11 @@ class DateTimeValue
     {
         return $this->value;
     }
+
+    public function setValue(DateTimeImmutable $value): self
+    {
+        $this->value = $value;
+
+        return $this;
+    }
 }
