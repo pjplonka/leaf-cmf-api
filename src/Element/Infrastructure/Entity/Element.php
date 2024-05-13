@@ -23,6 +23,9 @@ class Element
     #[ORM\Column(name: 'type', length: 255)]
     private string $group;
 
+    /**
+     * @var ArrayCollection<int, StringValue>
+     */
     #[ORM\OneToMany(mappedBy: 'element', targetEntity: StringValue::class, cascade: ['persist'])]
     private Collection $stringValues;
 
@@ -37,20 +40,36 @@ class Element
         $this->dateTimeValues = new ArrayCollection();
     }
 
-    public function addStringValue(StringValue $stringValue): self
+    public function addStringValue(StringValue $value): self
     {
-        if (!$this->stringValues->contains($stringValue)) {
-            $this->stringValues->add($stringValue);
+        $foundElement = $this
+            ->stringValues
+            ->findFirst(fn(int $key, StringValue $item) => $item->getName() === $value->getName());
+
+        if (!$foundElement) {
+            $this->stringValues->add($value);
+
+            return $this;
         }
+
+        $foundElement->setValue($value->getValue());
 
         return $this;
     }
 
-    public function addDateTimeValue(DateTimeValue $stringValue): self
+    public function addDateTimeValue(DateTimeValue $value): self
     {
-        if (!$this->dateTimeValues->contains($stringValue)) {
-            $this->dateTimeValues->add($stringValue);
+        $foundElement = $this
+            ->dateTimeValues
+            ->findFirst(fn(int $key, DateTimeValue $item) => $item->getName() === $value->getName());
+
+        if (!$foundElement) {
+            $this->dateTimeValues->add($value);
+
+            return $this;
         }
+
+        $foundElement->setValue($value->getValue());
 
         return $this;
     }
