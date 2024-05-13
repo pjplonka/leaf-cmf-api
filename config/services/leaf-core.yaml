@@ -17,6 +17,7 @@ services:
     arguments:
       - '@LeafCoreEventBus'
       - '@LeafCoreCreateElementHandler'
+      - '@LeafCoreUpdateElementHandler'
 
   LeafCoreValidator:
     class: Symfony\Component\Validator\Validator\ValidatorInterface
@@ -32,6 +33,15 @@ services:
 
   LeafCoreCreateElementHandler:
     class: Leaf\Core\Application\CreateElement\CreateElementHandler
+    arguments:
+      - '@ConfigurationProvider'
+      - '@LeafCoreFieldsDtoValidator'
+      - '@LeafCoreFieldFactory'
+      - '@Elements'
+      - '@LeafCoreEventStream'
+
+  LeafCoreUpdateElementHandler:
+    class: Leaf\Core\Application\UpdateElement\UpdateElementHandler
     arguments:
       - '@ConfigurationProvider'
       - '@LeafCoreFieldsDtoValidator'

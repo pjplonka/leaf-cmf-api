@@ -9,6 +9,7 @@ use Leaf\Core\Application\Common\Command\CommandBus;
 use Leaf\Core\Application\Common\FieldDTO;
 use Leaf\Core\Application\Common\Serializer\ElementSerializer;
 use Leaf\Core\Application\CreateElement\CreateElementCommand;
+use Leaf\Core\Application\UpdateElement\UpdateElementCommand;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,5 +50,25 @@ class ElementController
         }
 
         return new JsonResponse($serializer->serialize($element), 200);
+    }
+
+    #[Route('/elements/{uuid}', name: 'elements_update', methods: ['patch'])]
+    public function update(
+        Uuid $uuid,
+        Request $request,
+        CommandBus $commandBus,
+        Elements $elements,
+        ElementSerializer $serializer
+    ): Response {
+        $fields = [];
+        foreach ($request->toArray() as $key => $value) {
+            $fields[] = new FieldDTO($key, $value);
+        }
+
+        $command = new UpdateElementCommand($uuid, ...$fields);
+
+        $commandBus->handle($command);
+
+        return new JsonResponse($serializer->serialize($elements->find($uuid)));
     }
 }
