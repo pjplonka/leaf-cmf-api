@@ -23,12 +23,11 @@ class Element
     #[ORM\Column(name: 'type', length: 255)]
     private string $group;
 
-    /**
-     * @var ArrayCollection<int, StringValue>
-     */
+    /** @var ArrayCollection<int, StringValue> */
     #[ORM\OneToMany(mappedBy: 'element', targetEntity: StringValue::class, cascade: ['persist'])]
     private Collection $stringValues;
 
+    /** @var ArrayCollection<int, DateTimeValue> */
     #[ORM\OneToMany(mappedBy: 'element', targetEntity: DateTimeValue::class, cascade: ['persist'])]
     private Collection $dateTimeValues;
 
