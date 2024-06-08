@@ -21,9 +21,10 @@ class CreateElementTest extends WebTestCase
         );
 
         $response = $client->getResponse();
-        $uuid = json_decode($response->getContent(), true)['uuid'];
 
         $this->assertSame(201, $response->getStatusCode());
+
+        $uuid = json_decode($response->getContent(), true)['uuid'];
 
         // Retrieve part
         $client->jsonRequest('GET', '/elements/' . $uuid);
@@ -57,9 +58,10 @@ class CreateElementTest extends WebTestCase
         );
 
         $response = $client->getResponse();
-        $uuid = json_decode($response->getContent(), true)['uuid'];
 
         $this->assertSame(201, $response->getStatusCode());
+
+        $uuid = json_decode($response->getContent(), true)['uuid'];
 
         // Update part
         $client->jsonRequest(

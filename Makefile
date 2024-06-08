@@ -1,6 +1,9 @@
 dev:
 	docker compose up --pull always -d --wait
 
+up:
+	docker compose up -d
+
 exec:
 	docker compose exec -it php sh
 

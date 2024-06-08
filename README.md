@@ -22,3 +22,5 @@ with any name with just a few clicks in the configuration:
 - remove all fields when element is removed (delete cascade)
 - element need created_at and updated_at
 - add phpstan
+- test database should be separated from dev/prod database
+- test every element type and scenario
