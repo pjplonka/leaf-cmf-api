@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Element\Infrastructure\Entity;
 
 use App\Element\Infrastructure\Entity\Fields\DateTimeValue;
+use App\Element\Infrastructure\Entity\Fields\ParentValue;
 use App\Element\Infrastructure\Entity\Fields\StringValue;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,12 +32,17 @@ class Element
     #[ORM\OneToMany(mappedBy: 'element', targetEntity: DateTimeValue::class, cascade: ['persist'])]
     private Collection $dateTimeValues;
 
+    /** @var ArrayCollection<int, DateTimeValue> */
+    #[ORM\OneToMany(mappedBy: 'element', targetEntity: ParentValue::class, cascade: ['persist'])]
+    private Collection $parentValues;
+
     public function __construct(string $uuid, string $group)
     {
         $this->uuid = $uuid;
         $this->group = $group;
         $this->stringValues = new ArrayCollection();
         $this->dateTimeValues = new ArrayCollection();
+        $this->parentValues = new ArrayCollection();
     }
 
     public function addStringValue(StringValue $value): self
@@ -73,6 +79,23 @@ class Element
         return $this;
     }
 
+    public function addParentValue(ParentValue $value): self
+    {
+        $foundElement = $this
+            ->parentValues
+            ->findFirst(fn(int $key, ParentValue $item) => $item->getName() === $value->getName());
+
+        if (!$foundElement) {
+            $this->parentValues->add($value);
+
+            return $this;
+        }
+
+        $foundElement->setValue($value->getValue());
+
+        return $this;
+    }
+
     public function getUuid(): Uuid
     {
         return Uuid::fromString($this->uuid);
@@ -93,6 +116,12 @@ class Element
     public function getDateTimeValues(): Collection
     {
         return $this->dateTimeValues;
+    }
+
+    /** @return Collection<ParentValue> */
+    public function getParentValues(): Collection
+    {
+        return $this->parentValues;
     }
 
     public function __toString(): string

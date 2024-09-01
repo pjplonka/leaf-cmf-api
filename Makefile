@@ -8,6 +8,7 @@ exec:
 	docker compose exec -it php sh
 
 test\:init:
+	bin/console doctrine:database:drop --env=test --force || true
 	bin/console doctrine:database:create --env=test || true
 	bin/console doctrine:schema:create  --env=test || true
 
