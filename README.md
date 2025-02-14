@@ -15,7 +15,7 @@ with any name with just a few clicks in the configuration:
 # Basic Example
 
 1. Create a configuration
-Put new configuration to config/elements/
+Put new configuration to config/elements/products.php
 ```php
 use Leaf\Core\Core\Configuration\Field;
 use Leaf\Core\Core\Element\Field\DateTimeField;
