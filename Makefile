@@ -1,3 +1,6 @@
+build:
+	docker compose build
+
 dev:
 	docker compose up --pull always -d --wait
 

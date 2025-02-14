@@ -15,7 +15,7 @@ with any name with just a few clicks in the configuration:
 # Basic Example
 
 1. Create a configuration
-Put new configuration to config/elements/
+Put new configuration to config/elements/products.php
 ```php
 use Leaf\Core\Core\Configuration\Field;
 use Leaf\Core\Core\Element\Field\DateTimeField;
@@ -105,3 +105,4 @@ HTTP 200
 - test database should be separated from dev/prod database
 - test every element type and scenario
 - doc: example requests <basic>, apidoc, example app
+- reset migrations to 0
