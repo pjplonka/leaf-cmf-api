@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Element\Feature;
 
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CreateElementTest extends WebTestCase
 {
-    /** @test */
+    #[Test]
     public function element_can_be_created_and_retrieved(): void
     {
         $client = static::createClient();
@@ -45,7 +46,7 @@ class CreateElementTest extends WebTestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function element_can_be_updated(): void
     {
         $client = static::createClient();
